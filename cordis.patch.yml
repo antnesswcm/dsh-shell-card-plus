@@ -1,0 +1,6 @@
+# 向 web profile 插入本包的 client 半边。
+# client 半边由 dsh-client-modules 按 package.json 的 dsh.client 声明自动收集；
+# 这里只需一行 host stub，保证包被 Loader 激活即可。
+- insert:
+    - id: shell-card-plus
+      name: dsh-shell-card-plus

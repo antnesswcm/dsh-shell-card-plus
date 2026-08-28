@@ -1,0 +1,153 @@
+/* ShellCard：head + 2 body 的命令卡片（参考 ReadBlock 样式族）。 */
+
+.card {
+  margin: 4px 0 4px 4px;
+  border: 1px solid var(--dsw-alias-border-l1, rgba(128,128,128,0.3));
+  border-radius: 12px;
+  background: var(--dsw-alias-markdown-code-block, #1e1e1e);
+  overflow: hidden;
+  --dsl-terminal-radius: 12px;
+}
+
+/* ── HEAD：状态 + cwd + 分割按钮 ── */
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.35));
+}
+
+.stateWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 状态文字：仅读屏可见（官方同款 clip 隐藏）。可见状态由 StateDot 颜色 +
+   异常 pill 表达，不再显示"运行中/已完成"等文字。 */
+.stateLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 异常 pill：仅失败/信号/错误渲染（官方 TerminalBlock 的 exit/signal pill 同款，
+   error 红、monospace 小字）。 */
+.statusPill {
+  flex: none;
+  font: var(--dsw-font-markdown-code-block-small, 12px/1.6 monospace);
+  color: var(--dsw-alias-state-error-primary, #ef4444);
+}
+
+.cwd {
+  font-family: var(--ds-font-family-code, monospace);
+  font-size: 12px;
+  color: var(--dsw-alias-label-tertiary, #888);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* ── 分割按钮容器 ── */
+.split {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.35));
+  border-radius: 6px;
+  overflow: hidden;
+  flex: none;
+}
+
+.splitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary, #999);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.splitBtn:hover {
+  color: var(--dsw-alias-label-primary, #d4d4d4);
+  background: var(--dsw-alias-interactive-bg-hover, rgba(128,128,128,0.12));
+}
+
+.splitBtn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: transparent;
+}
+
+.splitDivider {
+  flex: none;
+  width: 1px;
+  height: 16px;
+  background: var(--dsw-alias-border-l2, rgba(128,128,128,0.35));
+}
+
+/* ── BODY（共用 section）── */
+.body {
+  padding: 8px 14px 10px;
+  border-bottom: 1px solid var(--dsw-alias-border-l2, rgba(128,128,128,0.35));
+}
+
+.body:last-child {
+  border-bottom: none;
+}
+
+/* ── BODY1：命令（行号 + 自动换行）── */
+.commandBody {
+  max-height: 180px;
+  overflow-y: auto;
+  font: var(--dsw-font-markdown-code-block-small, 12px/1.6 monospace);
+}
+
+.commandRow {
+  display: flex;
+  min-height: 1.6em;
+  line-height: 1.6em;
+}
+
+.lineNo {
+  flex: none;
+  text-align: right;
+  padding-right: 12px;
+  color: var(--dsw-alias-label-tertiary, #666);
+  user-select: none;
+}
+
+.lineText {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  color: var(--dsw-alias-label-primary, #d4d4d4);
+}
+
+/* ── BODY2：输出（pre 不换行，横向滚动）── */
+.output {
+  white-space: pre;
+  overflow-x: auto;
+  font: var(--dsw-font-markdown-code-block-small, 12px/1.6 monospace);
+  color: var(--dsw-alias-label-primary, #d4d4d4);
+  max-height: 224px;
+  overflow-y: auto;
+}

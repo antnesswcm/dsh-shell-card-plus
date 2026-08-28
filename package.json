@@ -1,0 +1,61 @@
+{
+  "name": "dsh-shell-card-plus",
+  "description": "Shell command cards (bash / pwsh) for the DSH web UI: fully custom React-rendered tool cards replacing the official terminal tool rows — status dot, cwd, error pill, copy command/output, numbered command + scrollable output.",
+  "version": "0.3.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs --prod",
+    "dev": "node scripts/build.mjs --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "lightningcss": "^1.29.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1"
+  },
+  "engines": {
+    "node": ">=22.19.0",
+    "dsh": ">=0.1.0-rc.5"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "shell",
+    "card",
+    "ui"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antnesswcm/dsh-shell-card-plus.git"
+  }
+}
