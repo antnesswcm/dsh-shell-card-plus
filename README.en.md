@@ -13,7 +13,7 @@ The stock bash/pwsh card in DSH Web has two daily annoyances:
 
 | Problem | Stock | This plugin |
 |---|---|---|
-| Long commands unreadable | Command is a single non-wrapping line; anything past one screen requires horizontal scrolling | Command **soft-wraps** with line numbers, fully visible |
+| Long commands unreadable | Command is a single line, **truncated with an ellipsis** — anything past it is simply invisible | Command **soft-wraps** with line numbers, fully visible |
 | No way to copy the command | Only a copy-output button exists; copying the command means manual text selection | Separate **copy command** and **copy output** buttons |
 
 Status display follows the official convention: quiet when normal (just a status dot), a red `exit N` / `Signal X` pill only on failure.
