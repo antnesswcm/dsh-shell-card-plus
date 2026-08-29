@@ -1,6 +1,6 @@
-# DEVELOPMENT — 开发手册
+# CLAUDE.md — 开发手册
 
-> 给接手的开发者/agent 的完整指南。阅读顺序：**架构** → **关键机制** → **状态矩阵** → **构建与热重载** → **常见陷阱** → **文件地图**。
+> 给接手的开发者/agent 的完整指南。阅读顺序：**这是什么** → **架构** → **关键机制** → **状态矩阵** → **构建与热重载** → **常见陷阱** → **文件地图**。
 
 ## 1. 这是什么
 
@@ -32,7 +32,7 @@ src/
 
 ### 运行时装配（为什么这么接）
 
-1. `cordis.patch.yml` 把 `dsh-shell-card-plus` 作为 loader entry 插入（`- insert: - id: shell-card-plus / name: dsh-shell-card-plus`）。
+1. `package.json` 的 `dsh.bundle.patch` 指向本包 `cordis.patch.yml`，`dsh plugin add` 时被自动加进 profile 的 `dsh.profile.bundles`，包内 patch（`- insert: - id: shell-card-plus / name: dsh-shell-card-plus`）随之自动应用——**安装即生效，无手动配置**。
 2. Loader 加载 host stub（`src/index.ts`，`apply` 为空）——**它存在的唯一意义**是让包在 Loader 里成为 entry。
 3. `dsh-client-modules` 扫描 loader entries，读到 `package.json` 的 `dsh.client` 声明（`platform: 'web'` + `exports["./client"]`），把 `lib/client.js` 编进 `window.__DSH_BOOT__`。
 4. 浏览器加载 `lib/client.js`，`__ModuleLoader__.load({ id: "dsh-shell-card-plus", factory })` 注册 bundle。
@@ -49,13 +49,13 @@ src/
 
 ### 3.1 toolview keyed slot 与 priority 阴影
 
-官方 `ToolCallTree.tsx` 的分派：
+官方 `ToolCallTree`（`dsh-client-ui-tool` 包内）的分派：
 
 ```tsx
 renderSlot('tool.call.toolview', owner, { entryKey: toolName, fallback: GenericToolCard })
 ```
 
-- 官方 `bash-toolview-sample` 已注册 `key: 'bash'`（`priority: 0`）。
+- 官方在**同一包内**已注册 `key: 'bash'`（组件 `BashRow`，未设 priority，默认 0）。
 - 我们注册 `key: 'bash'` + `priority: -1`——slot 是**最低 priority 渲染**，`-1 < 0`，所以我们替换官方。
 - **必须** `priority: -1`，否则同 key 同 priority 会抛错（`Failed to load plugins ... already has an entry for key "bash"`）。
 
@@ -155,15 +155,7 @@ dsh plugin --profile web add ./dsh-shell-card-plus   # 本地路径
 dsh plugin --profile web add github:antnesswcm/dsh-shell-card-plus
 ```
 
-web profile 的 `cordis.patch.yml` 需要 insert：
-
-```yaml
-- insert:
-    - id: shell-card-plus
-      name: dsh-shell-card-plus
-```
-
-**注意**：插件无 `dsh.bundle` 声明，不会被自动加进 profile bundle 层（那是 host 插件的通道）。client 插件只需作为**普通依赖**被安装，`dsh-client-modules` 会按 `dsh.client` 声明自动收集。
+本包在 `package.json` 里声明了 `dsh.bundle.patch: "./cordis.patch.yml"`，`dsh plugin add` 会自动把它加入 profile 的 `dsh.profile.bundles` 并应用包内 patch（插入 loader entry）。**无需手动改 profile 的 cordis.patch.yml**，装完重启 `dsh web` 即生效。
 
 ---
 
@@ -176,7 +168,7 @@ web profile 的 `cordis.patch.yml` 需要 insert：
 5. **不要 import 非平台模块的值**（如 `dsh-client-ui-tool` 的 `terminalCardModel`）→ 会触发 build 报错或运行时 require 失败。我们**内联**了它的纯逻辑到 `terminal-card-model.ts`。
 6. **输出区不能复用官方 TerminalBlock** → 它自带 header（`$` + 绿点 + 复制按钮），会多出"第三段"。输出区用纯 `<pre class="output">`。
 7. **cwd 显示要取子目录名**（`promptLabel` 逻辑），不是全路径。
-8. **更名/重建后要重装到 profile**：`dsh plugin remove` 旧包 + `add` 新包，并更新 patch 的 `id`/`name`（v0.3.0 由 `terminal-plus` 改为 `shell-card-plus`，升级用户需重装）。
+8. **更名/重建后要重装到 profile**：`dsh plugin remove` 旧包 + `add` 新包（v0.3.0 由 `terminal-plus` 改为 `shell-card-plus`，升级用户需重装）。
 9. **dsh web 与 `pnpm run build`（官方仓库）不能并发**——但那与本包无关，本包独立构建。
 
 ---
