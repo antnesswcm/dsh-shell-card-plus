@@ -47,7 +47,7 @@ export function ToolCallRow({ block, cwd, toolName }: ToolCallViewProps) {
   const en = typeof document !== 'undefined' && (document.documentElement.lang || '').toLowerCase().indexOf('en') === 0
   const model = terminalCardModel(block, cwd)
   const title = toolName === 'pwsh' ? 'Pwsh' : 'Bash'
-  const summary = model.command ? model.command.split('\n')[0] : (en ? '(no command)' : '(无命令)')
+  const summary = model.description ? model.description.split('\n')[0] : (en ? '(no description)' : '(无描述)')
   const expandable = true
   const leadingIcon = leadingIconOf(model.status)
   const srStatus = srStatusOf(model.status, en)
