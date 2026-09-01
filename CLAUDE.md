@@ -187,5 +187,41 @@ dsh plugin --profile web add github:antnesswcm/dsh-shell-card-plus
 | `src/client/assets/*.svg` | 图标源文件（改图标只动这里） |
 | `scripts/build.mjs` | 独立构建（esbuild + lightningcss + svgPlugin），dev/prod 分离，watch 热重载 |
 | `cordis.patch.yml` | loader entry 插入声明 |
+| `screenshots.json` | 市场截图声明（docs/preview/ 下图片路径） |
 | `README.md` | 用户文档 |
 | `docs/DEVELOPMENT.md` | 本开发手册 |
+
+---
+
+## 8. 上架 awesome-dsh-plugin 市场流程
+
+### 前置条件
+
+- ✅ **`dsh.bundle` manifest**：`package.json` 已声明 `dsh.bundle.patch: "./cordis.patch.yml"`（已完成）
+- ✅ **`dsh-plugin` topic**：仓库已添加（已完成）
+- ⚠️ **提交数 ≥ 10**：当前 `dev` 已达标（10+ commits）
+- ⚠️ **仓库创建满 1 天**：2026-08-29 创建，已满足
+- ⚠️ **`peerDependencies` 预发布兼容**：当前 `>=4.0.1` 不含预发布标签，`@deepseek-ai/cordis` 4.x 无预发布时 OK（参见 contributings.md 第 132-140 行的预发布分支说明）
+
+### 投稿步骤
+
+1. Fork [`awesome-dsh-plugin/awesome-dsh-plugin`](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
+2. 在 `data/plugins/` 下创建 `antnesswcm__dsh-shell-card-plus.yml`：
+
+```yaml
+url: https://github.com/antnesswcm/dsh-shell-card-plus
+name: antnesswcm/dsh-shell-card-plus
+category: ui
+description:
+  en: Shell command cards (bash / pwsh) for the DSH web UI: fully custom React-rendered tool cards replacing the official terminal tool rows — status dot, cwd, error pill, copy command/output, numbered command + scrollable output.
+  zh: DSH Web 的 bash/pwsh 命令卡片增强插件，用自定义 React 卡片替换官方工具行——状态点、当前目录、错误标签、复制命令/输出、编号命令区与可滚动输出。
+```
+
+3. 提 PR，CI 自动校验后评审合并
+4. 合并后，市场页面自动重建，`screenshots.json` 截图自动展示
+
+### 后续维护
+
+- **更新截图**：直接推本仓库 `docs/preview/` 下图片，下一次市场构建自动生效（无需再去提 PR）
+- **更新描述**：编辑上述 YAML 文件再提 PR
+- **发布 npm 包**（可选）：`repository` 字段需指回 GitHub 仓库，市场会自动关联下载量统计
