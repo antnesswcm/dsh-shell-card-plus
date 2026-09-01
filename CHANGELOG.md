@@ -2,6 +2,27 @@
 
 All notable changes to this project are documented here.
 
+## [0.3.1] - 2026-09-01
+
+### Fixed
+
+- **折叠行摘要行行为对齐官方**：官方 `BashRow` 的摘要行（`Bash · 描述`）在展开后应始终保留（`keepContentWhenOpen`），此前展开后摘要行消失，已补上该 prop。
+- **折叠行缺分隔圆点**：官方行结构为 `Bash · 描述`，中间有 2px 圆点（`.sep`），此前缺失，已补上。空摘要时圆点一并消失（官方同款）。
+- **折叠行摘要来源错误**：此前用 `model.command` 首行作为摘要，但官方应取 `model.description`（模型描述文字）。已修正。
+- **摘要错误状态优先级**：官方摘要优先级为 `failureLine ?? terminal?.description ?? model.summary`，错误态应显示错误输出首行（红色）。已对齐。
+- **缺少 Inspect 按钮**：官方展开卡片下方有 Inspect 按钮（`IconInspectOutline12`），由 `ToolCallOwnerProps.inspect` 注入，此前未使用。已补上。
+
+### Changed
+
+- **README 痛点描述修正**：`想改命令没有入口` → `没有复制命令按钮`（更准确描述原版问题）。
+- **README 添加截图对比**：`docs/preview/` 下放入原版 vs 本插件展开卡片对比截图，替换原有 TODO 占位。
+
+### Notes
+
+- 全部修复已通过 `dev` 分支推送远端，`main` 已同步。
+- 本地 dsh 已 link 安装 dev 分支版本，重新构建后重启 dsh web 生效。
+- 仓库已添加 `dsh-plugin` / `deepseek-harness` / `cordis` 三个 GitHub topic，上架准备就绪。
+
 ## [0.3.0] - 2026-08-29
 
 ### Changed (breaking)
