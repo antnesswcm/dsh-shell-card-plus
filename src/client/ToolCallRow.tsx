@@ -6,7 +6,7 @@
  * - 展开后：完全自定义的 ShellCard（head + 2 body）。
  */
 import { useState } from 'react'
-import { DisclosureRow, IconApiOutline14, StateDot } from '@deepseek-ai/dsh-client-ui-primitives'
+import { DisclosureRow, IconApiOutline14, IconInspectOutline12, StateDot } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { ToolCallViewProps } from '@deepseek-ai/dsh-client-ui-tool'
 import type { ReactNode } from 'react'
 import { terminalCardModel, type TerminalCardStatus } from './terminal-card-model.ts'
@@ -42,12 +42,17 @@ function srStatusOf(status: TerminalCardStatus, en: boolean): string | null {
   }
 }
 
-export function ToolCallRow({ block, cwd, toolName }: ToolCallViewProps) {
+export function ToolCallRow({ block, cwd, toolName, inspect }: ToolCallViewProps) {
   const [expanded, setExpanded] = useState(false)
   const en = typeof document !== 'undefined' && (document.documentElement.lang || '').toLowerCase().indexOf('en') === 0
   const model = terminalCardModel(block, cwd)
   const title = toolName === 'pwsh' ? 'Pwsh' : 'Bash'
-  const summary = model.description ? model.description.split('\n')[0] : (en ? '(no description)' : '(无描述)')
+  // 摘要优先级（对齐官方 BashRow：failureLine ?? terminal?.description ?? model.summary）：
+  // 错误状态 → 错误输出首行（红色）；否则取 description 首行；都缺则兜底文案。
+  const errorSummary = model.status.kind === 'error'
+    ? (model.output?.split('\n')[0] ?? model.description?.split('\n')[0] ?? '')
+    : ''
+  const summary = errorSummary || (model.description ? model.description.split('\n')[0] : (en ? '(no description)' : '(无描述)'))
   const expandable = true
   const leadingIcon = leadingIconOf(model.status)
   const srStatus = srStatusOf(model.status, en)
@@ -63,10 +68,28 @@ export function ToolCallRow({ block, cwd, toolName }: ToolCallViewProps) {
         open={expanded}
         expandable={expandable}
         expandOnRowClick
+        keepContentWhenOpen
         onToggle={() => setExpanded(v => !v)}
-        collapsedContent={<span className={css.summary}>{summary}</span>}
+        collapsedContent={
+          /* 官方同款行结构：title + sep 圆点 + summary（`Bash · 描述`）。
+             错误行摘要显示为红色（官方同款 .errorSummary）。 */
+          summary !== '' && (
+            <>
+              <span className={css.sep} aria-hidden />
+              <span className={`${css.summary}${model.status.kind === 'error' ? ` ${css.errorSummary}` : ''}`}>{summary}</span>
+            </>
+          )
+        }
       >
-        <ShellCard block={block} cwd={cwd} />
+        <div className={css.bodyWrap}>
+          <ShellCard block={block} cwd={cwd} />
+          {inspect !== undefined && (
+            <button type="button" className={css.inspectButton} onClick={inspect}>
+              <IconInspectOutline12 />
+              Inspect
+            </button>
+          )}
+        </div>
       </DisclosureRow>
     </div>
   )

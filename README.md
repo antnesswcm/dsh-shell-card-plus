@@ -18,7 +18,11 @@ DSH Web 原版的 bash/pwsh 命令卡片有两个日常痛点：
 
 状态显示对齐官方规范：正常时安静（只有一个状态点），失败时才显示红色 `退出码 N` / `信号 X`。
 
-<!-- TODO: 截图放 docs/preview/ 下（card-collapsed.png / card-expanded.png）后补这里 -->
+<p align="center">
+  <img src="docs/preview/official-expanded.png" width="400" alt="原版展开卡片"> <img src="docs/preview/shell-card-plus-expanded.png" width="400" alt="本插件展开卡片">
+  <br>
+  <sub><i>左：原版展开卡片 · 右：本插件展开卡片</i></sub>
+</p>
 
 ## 功能
 

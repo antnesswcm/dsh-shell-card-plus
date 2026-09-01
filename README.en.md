@@ -18,7 +18,11 @@ The stock bash/pwsh card in DSH Web has two daily annoyances:
 
 Status display follows the official convention: quiet when normal (just a status dot), a red `exit N` / `Signal X` pill only on failure.
 
-<!-- TODO: add screenshots under docs/preview/ (card-collapsed.png / card-expanded.png) -->
+<p align="center">
+  <img src="docs/preview/official-expanded.png" width="400" alt="Stock expanded card"> <img src="docs/preview/shell-card-plus-expanded.png" width="400" alt="This plugin's expanded card">
+  <br>
+  <sub><i>Left: stock expanded card · Right: this plugin's expanded card</i></sub>
+</p>
 
 ## Features
 

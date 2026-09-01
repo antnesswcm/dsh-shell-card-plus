@@ -21,6 +21,17 @@
 .wrap[data-hot="5"] .hotTag { background: #059669; }
 .wrap[data-hot="6"] .hotTag { background: #d97706; }
 
+/* 分隔圆点：官方 bash 行 `Bash · 描述` 里的中间点（同 ToolRow/.sep）。
+   flex:none 固定不伸缩，摘要过长时它先于摘要被裁掉（官方同款行为）。 */
+.sep {
+  flex: none;
+  width: 2px;
+  height: 2px;
+  border-radius: 1px;
+  margin: 0 8px;
+  background: var(--dsw-alias-label-caption);
+}
+
 .summary {
   flex: 1 1 auto;
   min-width: 0;
@@ -30,6 +41,46 @@
   font-size: 14px;
   line-height: 24px;
   color: var(--dsw-alias-label-tertiary, #7d7d7d);
+}
+
+/* 错误行摘要：红色（官方同款）。 */
+.errorSummary {
+  color: var(--dsw-alias-state-error-primary);
+}
+
+/* 展开卡片容器（与 Inspect 按钮的间隙边界）。 */
+.bodyWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inspect 按钮：官方同款悬停浮现、flow 定位。 */
+.inspectButton {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 2px 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 999px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+  line-height: 16px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
+.wrap:hover .inspectButton,
+.inspectButton:focus-visible {
+  opacity: 1;
+}
+
+.inspectButton:hover {
+  background: var(--dsw-alias-interactive-bg-hover-solid);
+  color: var(--dsw-alias-label-primary);
 }
 
 /* 读屏专用状态文字（官方 stateStatus 同款处理）：StateDot 是纯颜色信号、
