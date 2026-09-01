@@ -2,6 +2,7 @@
 
 # dsh-shell-card-plus
 
+[![Awesome DSH Plugin](https://awesome-dsh-plugin.com/badge.svg)](https://awesome-dsh-plugin.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
 [![dsh](https://img.shields.io/badge/dsh-%3E%3D0.1.0--rc.5-blue)](https://github.com/deepseek-ai/deepseek-harness)
 
