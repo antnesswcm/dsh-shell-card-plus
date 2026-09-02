@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here.
 
+## [0.3.2] - 2026-09-02
+
+### Added
+
+- **发布到 npm**：`dsh-shell-card-plus@0.3.2` 已发布至 [npmjs.com](https://www.npmjs.com/package/dsh-shell-card-plus)。npm 安装直接拿预构建产物，免去 GitHub 源安装时的 `allowBuilds` 构建白名单配置。安装命令升级为 `dsh plugin --profile web add dsh-shell-card-plus`（README 中英版同步更新）。
+- **上架 awesome-dsh-plugin 市场**：PR [awesome-dsh-plugin#4086](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/4086) 已合并，条目进入 **UI Enhancements** 分类，市场页面自动展示 `screenshots.json` 对比截图。
+
 ## [0.3.1] - 2026-09-01
 
 ### Fixed

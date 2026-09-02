@@ -36,7 +36,10 @@ DSH Web 原版的 bash/pwsh 命令卡片有两个日常痛点：
 ## 安装
 
 ```sh
-# 从 GitHub 安装（推荐）
+# 从 npm 安装（推荐，免构建白名单配置）
+dsh plugin --profile web add dsh-shell-card-plus
+
+# 或从 GitHub
 dsh plugin --profile web add github:antnesswcm/dsh-shell-card-plus
 
 # 或本地目录

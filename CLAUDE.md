@@ -152,10 +152,13 @@ renderSlot('tool.call.toolview', owner, { entryKey: toolName, fallback: GenericT
 ```sh
 dsh plugin --profile web add ./dsh-shell-card-plus   # 本地路径
 # 或发布后
-dsh plugin --profile web add github:antnesswcm/dsh-shell-card-plus
+dsh plugin --profile web add dsh-shell-card-plus     # npm（推荐，免 allowBuilds）
+dsh plugin --profile web add github:antnesswcm/dsh-shell-card-plus  # GitHub
 ```
 
 本包在 `package.json` 里声明了 `dsh.bundle.patch: "./cordis.patch.yml"`，`dsh plugin add` 会自动把它加入 profile 的 `dsh.profile.bundles` 并应用包内 patch（插入 loader entry）。**无需手动改 profile 的 cordis.patch.yml**，装完重启 `dsh web` 即生效。
+
+**npm 安装 vs GitHub 安装**：npm 包（`lib/` 已在 `files` 里）直接拿预构建产物，跳过 pnpm 对 git 源构建脚本的 `allowBuilds` 白名单审批；GitHub 源安装会要求用户在 `pnpm-workspace.yaml` 加 `onlyBuiltDependencies` 或按 pnpm 提示处理。因此**对外文档一律推荐 npm 安装**。
 
 ---
 

@@ -36,7 +36,10 @@ Status display follows the official convention: quiet when normal (just a status
 ## Install
 
 ```sh
-# From GitHub (recommended)
+# From npm (recommended — no allowBuilds setup needed)
+dsh plugin --profile web add dsh-shell-card-plus
+
+# From GitHub
 dsh plugin --profile web add github:antnesswcm/dsh-shell-card-plus
 
 # Or from a local directory
